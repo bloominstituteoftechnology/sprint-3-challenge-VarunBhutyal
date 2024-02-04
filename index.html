@@ -59,7 +59,50 @@
       // ❗ WARNING: except for `getAllReversed`, methods must respect the order of the integers
       // ❗ WARNING: note that none of the methods actually mutate the `ints` property
 
-    }
+      constructor(...ints){
+        this.ints= ints;
+      }
+      getAll(){
+        return this.ints;
+      }
+      getEvens(){
+        const arrEven = this.ints.filter(intg => intg % 2===0)
+        return arrEven
+      }
+      getNegatives(){
+        const arrNeg = this.ints.filter(intg => intg < 0)
+        return arrNeg
+      }
+      getAllSquared(){
+        const arrSqur = this.ints.map(intg => intg ** 2)
+        return arrSqur
+      }
+      pop(){
+        return this.ints.pop();
+      }
+      push(int){
+        this.ints.push(int)
+        return this.ints
+      }
+      getEveryNth(n){
+        const arrEvryNth = []
+        for (let idx = 0; idx < this.ints.length-1 ; idx++) {
+            if (idx>1){
+              n+=n
+            }
+            if (idx===0){
+              arrEvryNth.push(this.ints[0])
+            } else if (n < this.ints.length){
+              arrEvryNth.push(this.ints[n])
+            }            
+          }
+          return arrEvryNth
+        }
+      getAllReversed(){
+        return this.ints.reverse();
+      }
+      }
+    
 
     // 👉 CHALLENGE 2 NerfGun
     class NerfGun {
@@ -77,6 +120,43 @@
       //      * When disengaging the safety, return "Safety disabled!"
       // 🌟 HINT: instances need to keep track of their maximum capacity as well as their current capacity
 
+        constructor(totalProjectiles){
+          this.capactiy = totalProjectiles;
+          this.maxCapacity= totalProjectiles;
+          this.saftey="On"
+        }
+        shoot() {
+          if (this.capactiy > 0 && this.saftey === "Off") {
+            this.capactiy--
+            return "Bang!"
+          }
+          if (this.capactiy === 0 || this.saftey === "On") {
+            return "Click!"
+          }
+        }
+        toggleSafety(){
+          if (this.saftey === "On") {
+            this.saftey = "Off";
+            return "Safety disabled!"
+          } else if (this.saftey === "Off") {
+            this.saftey = "On"
+            return "Safety enabled!"
+          }
+        }
+        reload(topUpNum){
+          if (topUpNum <= 0) {
+            return "Error reloading!"
+          }
+          if (topUpNum > this.maxCapacity) {
+            this.capactiy= this.maxCapacity
+            return `${this.capactiy} projectiles left!`
+          } else if (this.capactiy < topUpNum) {
+            this.capactiy= topUpNum
+            return `${this.capactiy} projectiles left!`
+          } else {
+            return "Error reloading!"
+          }
+        }
     }
 
     // 👉 CHALLENGE 3 EBook
@@ -96,6 +176,20 @@
       // 🌟 HINT: remember about the `slice` method which strings and arrays have
       // ❗ Feel free to implement `back`, although this is not required nor graded
 
+      constructor (strText,charCount){
+        this.arrText = strText.split("")
+        this.charCount = charCount
+      }
+      next(){
+        let nextPage = []
+        if (this.arrText.length >= 1) {
+          nextPage = this.arrText.slice(0,this.charCount)
+          this.arrText = this.arrText.slice(this.charCount, this.arrText.length)
+          return nextPage.join("")
+        } else {
+          return null
+        }
+      }
     }
 
     // 👉 CHALLENGE 4 AntFarm
@@ -131,6 +225,41 @@
       // 👉 HINT: if you are not feeling confident with map and filter, solve the problem with for loops,
       //      and with the piece of mind of all tests passing, refactor to use map/filter
 
+      constructor(...antNames) {
+        const arrAnts = [ ]
+        for (let idx=0; idx < antNames.length; idx++) {
+          arrAnts.push({"name" : antNames[idx], "health" : 100})
+        }
+        this.ants = arrAnts
+      }
+
+      work(){
+        const arrAntsWork=[]
+        const arrAntsStart = this.ants.map(ant => ant.health -= 20)
+        let arrAntsRemaining = this.ants.map(ant => ant.health >0 ? arrAntsWork.push(ant) : "" )
+        arrAntsRemaining = arrAntsWork
+        this.ants = arrAntsRemaining
+        if (arrAntsStart.length >= 1) {
+          return `${arrAntsStart.length} ants starting work!`
+        } else if (arrAntsRemaining.length < 1) {
+          return "No ants here. Did you work them to death?"
+        }
+      }
+
+      feed(feedAnt){
+        let antFound =false
+        for (let idx=0; idx <= this.ants.length-1; idx++) {
+          if (this.ants[idx].name === feedAnt) {
+            this.ants[idx].health += 15
+            antFound = true
+          }
+        }
+        if (antFound) {
+          return "Yum!"
+        } else {
+          return `${feedAnt} not found!`
+        }
+      }
     }
 
     // 🧪 TESTS, do not make any changes below this line ===================
