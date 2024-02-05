@@ -144,9 +144,9 @@
           }
         }
         reload(topUpNum){
-          if (topUpNum <= 0) {
-            return "Error reloading!"
-          }
+          // if (topUpNum <= 0) {
+          //   return "Error reloading!"
+          // }
           if (topUpNum > this.maxCapacity) {
             this.capactiy= this.maxCapacity
             return `${this.capactiy} projectiles left!`
