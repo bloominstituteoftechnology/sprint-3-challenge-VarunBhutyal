@@ -151,7 +151,7 @@
             this.capactiy= this.maxCapacity
             return `${this.capactiy} projectiles left!`
           } else if (this.capactiy < topUpNum) {
-            this.capactiy= topUpNum
+            this.capactiy += topUpNum
             return `${this.capactiy} projectiles left!`
           } else {
             return "Error reloading!"
